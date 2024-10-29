@@ -18,6 +18,7 @@ import {
   SingleProduct
 } from './pages';
 
+import { loader as featuredProductLoader } from './pages/Landing';
 import { loader as listProductLoader } from './pages/Products';
 import { loader as singleProductLoader } from './pages/SingleProduct';
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: featuredProductLoader(queryClient),
         element: <Landing />
       },
       {

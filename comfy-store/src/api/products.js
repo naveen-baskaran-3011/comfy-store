@@ -15,3 +15,11 @@ export function fetchListItems(queryParams) {
     return { data: data.data, meta: data.meta };
   });
 }
+
+export function featuredProducts (productId) {
+  return fetch('https://strapi-store-server.onrender.com/api/products?featured=true')
+  .then((response) => response.json())
+  .then(({ data }) => {
+    return data;
+  })
+}
