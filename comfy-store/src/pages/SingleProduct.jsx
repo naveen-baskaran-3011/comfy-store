@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { fetchProduct } from "../api/products";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import styles from './SingleProduct.module.css';
 import { formatPrice } from "../utils";
 import { useCallback, useEffect, useState } from "react";
-import Loading from "../components/Loading";
 
 const singleProductQuery = (id) => {
     return {

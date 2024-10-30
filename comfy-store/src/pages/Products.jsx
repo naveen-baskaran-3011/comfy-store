@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { fetchListItems } from "../api/products";
-import Loading from "../components/Loading";
 import ProductCard from "../components/ProductCard";
 import { Link, useLoaderData } from "react-router-dom";
 import { BsGrid, BsList } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductListCard from "../components/ProductListCard";
 import FilterControls from "../components/FilterControls";
 import Pagination from "../components/Pagination";
