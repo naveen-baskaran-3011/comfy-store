@@ -92,9 +92,10 @@ export default function SingleProduct() {
 
                     <button className="btn btn-primary uppercase mt-4" onClick={() => {
                         dispatch(addToCart({
-                            id: productId,
+                            product_id: productId,
                             ...attributes,
-                            quantity
+                            quantity,
+                            color: colorCode
                         }))
                     }}>
                         Add to cart
