@@ -23,7 +23,7 @@ function OtherErrors() {
 
 export default function Error() {
     const error = useRouteError();
-
+    debugger;
     if (error.status === 404) {
         return <Error_404 />
     }

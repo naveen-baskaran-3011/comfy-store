@@ -1,5 +1,27 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import { SubmitBtn, FormInput } from "../components";
+import { login } from "../slice/userSlice";
+
+export const action = (store) => {
+    return async ({ request }) => {
+        const data = await request.formData();
+        const formData = Object.fromEntries(data);
+        try {
+            const result = await fetch('https://strapi-store-server.onrender.com/api/auth/local', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(res => res.json()).then(loginDetails => {
+                store.dispatch(login(loginDetails));
+            });
+            return redirect('/');
+        } catch (e) {
+            console.error(e);
+        }
+    }
+}
 
 export default function Login() {
     return (<section className='h-screen grid place-items-center'>
@@ -10,11 +32,11 @@ export default function Login() {
             <FormInput
                 label={'Email'}
                 type={'email'}
-                name={'email'}/>
+                name={'identifier'} />
             <FormInput
                 label={'Password'}
                 type={'password'}
-                name={'password'}/>
+                name={'password'} />
 
             <div className='mt-4'>
                 <SubmitBtn text='Login' />

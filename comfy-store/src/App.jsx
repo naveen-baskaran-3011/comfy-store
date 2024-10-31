@@ -4,6 +4,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import {
   About,
   Cart,
@@ -17,10 +19,11 @@ import {
   Register,
   SingleProduct
 } from './pages';
-
 import { loader as featuredProductLoader } from './pages/Landing';
 import { loader as listProductLoader } from './pages/Products';
 import { loader as singleProductLoader } from './pages/SingleProduct';
+import { action as loginAction } from './pages/Login';
+import { loader as ordersLoader } from './pages/Orders';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'orders',
+        loader: ordersLoader(store, queryClient),
         element: <Orders />,
       },
       {
@@ -71,6 +75,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
+    action: loginAction(store),
     element: <Login />,
     errorElement: <Error />,
   },
@@ -83,10 +88,12 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Provider>
   );
 };
 

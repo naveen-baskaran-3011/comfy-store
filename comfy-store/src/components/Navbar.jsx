@@ -1,9 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import { PiShoppingCart, PiMoon as DarkIcon, PiSun as LightIcon } from "react-icons/pi";
 import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
     const [theme, setTheme] = useState('winter');
+    const userObject = useSelector((state) => state.user);
 
     const themeHandler = useCallback(() => {
         const themeToSet = theme === 'winter' ? 'dracula' : 'winter';
@@ -27,6 +29,7 @@ export default function Navbar() {
                     <li><NavLink to="/about">About</NavLink></li>
                     <li><NavLink to="/products">Products</NavLink></li>
                     <li><NavLink to="/cart">Cart</NavLink></li>
+                    {userObject.user && <li><NavLink to="/orders">Orders</NavLink></li>}
                 </ul>
             </div>
             <div className="navbar-end">

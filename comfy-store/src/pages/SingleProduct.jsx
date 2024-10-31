@@ -23,7 +23,6 @@ export function loader(queryClient) {
 
 export default function SingleProduct() {
     const { attributes } = useLoaderData();
-    const abc = useLoaderData();
 
     const [colorCode, setColorCode] = useState(attributes.colors[0]);
     const [quantity, setQuantity] = useState(1);
