@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
 import { fetchOrders } from "../api/orders"
 import OrdersTable from "../components/OrdersTable";
 
@@ -29,8 +29,12 @@ export const loader = (store, queryClient) => {
 }
 
 export default function Orders() {
+    const ordersData = useLoaderData();
+
     return (<>
-        <h1 className='text-4xl'>Orders</h1>
+        <h1 className='text-4xl'>Your Orders</h1>
+        <div className="border-b mt-5"></div>
+        <div className="text-md my-4">total orders : {ordersData.meta.pagination.total}</div>
         <OrdersTable />
     </>)
 };
