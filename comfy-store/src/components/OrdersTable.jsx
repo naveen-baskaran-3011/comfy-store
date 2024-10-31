@@ -9,7 +9,7 @@ export default function OrdersTable() {
                 {/* head */}
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Order Id</th>
                         <th>Name</th>
                         <th>Address</th>
                         <th>Products</th>
