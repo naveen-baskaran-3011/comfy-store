@@ -3,6 +3,8 @@ import { Link, useLoaderData, useParams } from "react-router-dom";
 import styles from './SingleProduct.module.css';
 import { formatPrice } from "../utils";
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../slice/cartSlice";
 
 const singleProductQuery = (id) => {
     return {
@@ -22,7 +24,8 @@ export function loader(queryClient) {
 };
 
 export default function SingleProduct() {
-    const { attributes } = useLoaderData();
+    const {id: productId, attributes} = useLoaderData();
+    const dispatch = useDispatch();
 
     const [colorCode, setColorCode] = useState(attributes.colors[0]);
     const [quantity, setQuantity] = useState(1);
@@ -86,6 +89,16 @@ export default function SingleProduct() {
                             <option value={3}>3</option>
                         </select>
                     </div>
+
+                    <button className="btn btn-primary uppercase mt-4" onClick={() => {
+                        dispatch(addToCart({
+                            id: productId,
+                            ...attributes,
+                            quantity
+                        }))
+                    }}>
+                        Add to cart
+                    </button>
                 </div>
             </div>
         </>)

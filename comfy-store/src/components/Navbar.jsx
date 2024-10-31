@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 export default function Navbar() {
     const [theme, setTheme] = useState('winter');
     const userObject = useSelector((state) => state.user);
+    const cartObject = useSelector(state => state.cart);
 
     const themeHandler = useCallback(() => {
         const themeToSet = theme === 'winter' ? 'dracula' : 'winter';
@@ -37,8 +38,7 @@ export default function Navbar() {
                     <ThemeIcon className='h-6 w-6' />
                 </a>
                 <Link to="/cart" className="btn btn-ghost relative">
-                    {/* <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500">3</span> */}
-                    <span className="custom-badge">3</span>
+                    {cartObject.count ? (<span className="custom-badge">{cartObject.count}</span>) : (<span className="empty-badge" />)}
                     <PiShoppingCart className='h-6 w-6' />
                 </Link>
             </div>
