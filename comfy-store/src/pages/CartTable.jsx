@@ -52,7 +52,7 @@ export default function ({ cartItems }) {
                                 })}
                             </select>
                             <br />
-                            <button className='link link-primary' onClick={() => dispatch(removeFromCart({
+                            <button className='link link-primary link-hover' onClick={() => dispatch(removeFromCart({
                                 product_id: item.product_id,
                                 color: item.color
                             }))}>remove</button>
