@@ -24,7 +24,7 @@ export function loader(queryClient) {
 };
 
 export default function SingleProduct() {
-    const {id: productId, attributes} = useLoaderData();
+    const { id: productId, attributes } = useLoaderData();
     const dispatch = useDispatch();
 
     const [colorCode, setColorCode] = useState(attributes.colors[0]);
@@ -84,9 +84,14 @@ export default function SingleProduct() {
                             value={quantity}
                             onChange={handleQuantity}
                         >
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
+                            {Array.from({ length: 20 }, (_, index) => {
+                                const amount = index + 1;
+                                return (
+                                    <option key={amount} value={amount}>
+                                        {amount}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
 
