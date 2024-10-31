@@ -34,7 +34,7 @@ export default function Orders() {
     return (<>
         <h1 className='text-4xl'>Your Orders</h1>
         <div className="border-b mt-5"></div>
-        <div className="text-md my-4">total orders : {ordersData.meta.pagination.total}</div>
+        <div className="text-md my-4 capitalize">total orders : {ordersData.meta.pagination.total}</div>
         <OrdersTable />
     </>)
 };
