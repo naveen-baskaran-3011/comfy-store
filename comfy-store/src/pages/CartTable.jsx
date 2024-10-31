@@ -5,7 +5,7 @@ import { removeFromCart, updateCartItem } from '../slice/cartSlice';
 export default function ({ cartItems }) {
     const dispatch = useDispatch();
 
-    return (<div className="overflow-x-auto">
+    return (<div className="overflow-x-auto" style={{flexGrow: 1}}>
         <table className="table">
             <tbody>
                 {cartItems.map(item => (
