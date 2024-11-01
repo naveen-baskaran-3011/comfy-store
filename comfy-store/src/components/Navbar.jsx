@@ -4,13 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function Navbar() {
-    const [theme, setTheme] = useState('winter');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'winter');
     const userObject = useSelector((state) => state.user);
     const cartObject = useSelector(state => state.cart);
 
     const themeHandler = useCallback(() => {
         const themeToSet = theme === 'winter' ? 'dracula' : 'winter';
         setTheme(themeToSet)
+        localStorage.setItem('theme', themeToSet);
     }, [theme]);
 
     useEffect(() => {
@@ -38,7 +39,7 @@ export default function Navbar() {
                     <ThemeIcon className='h-6 w-6' />
                 </a>
                 <Link to="/cart" className="btn btn-ghost relative">
-                    {cartObject.count ? (<span className="custom-badge">{cartObject.count}</span>) : (<span className="empty-badge" />)}
+                    {cartObject.count ? (<span className="custom-badge border-transparent">{cartObject.count}</span>) : (<span className="empty-badge border-transparent" />)}
                     <PiShoppingCart className='h-6 w-6' />
                 </Link>
             </div>

@@ -45,7 +45,7 @@ export function loader(queryClient) {
 export default function Products() {
     const { data, meta, params } = useLoaderData();
 
-    const [layoutType, setLayoutType] = useState('grid');
+    const [layoutType, setLayoutType] = useState(localStorage.getItem('viewType') || 'grid');
     const [selectedRange, setSelectedRange] = useState(params.price || 100000);
 
     return (<>
@@ -64,10 +64,20 @@ export default function Products() {
             <div className="flex justify-between border-b border-base items-center py-4">
                 <h4 className="font-medium text-md">{meta.pagination.total} products</h4>
                 <div className="flex gap-x-2">
-                    <button className={`text-xl btn btn-circle btn-sm ${layoutType === 'grid' ? 'btn-primary text-primary-content' : ''}`} onClick={() => { setLayoutType('grid') }}>
+                    <button
+                        className={`text-xl btn btn-circle btn-sm ${layoutType === 'grid' ? 'btn-primary text-primary-content' : ''}`}
+                        onClick={() => {
+                            setLayoutType('grid');
+                            localStorage.setItem('viewType', 'grid');
+                        }}>
                         <BsGrid />
                     </button>
-                    <button className={`text-xl btn btn-circle btn-sm ${layoutType === 'list' ? 'btn-primary text-primary-content' : ''}`} onClick={() => { setLayoutType('list') }}>
+                    <button
+                        className={`text-xl btn btn-circle btn-sm ${layoutType === 'list' ? 'btn-primary text-primary-content' : ''}`}
+                        onClick={() => {
+                            setLayoutType('list');
+                            localStorage.setItem('viewType', 'list');
+                        }}>
                         <BsList />
                     </button>
                 </div>
@@ -86,7 +96,7 @@ export default function Products() {
                 ))}
             </div>)}
             <div className="mt-16 flex justify-end">
-                <Pagination currentPage={meta.pagination.page} pageCount={meta.pagination.pageCount}/>
+                <Pagination currentPage={meta.pagination.page} pageCount={meta.pagination.pageCount} />
             </div>
         </>
     </>)
