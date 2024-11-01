@@ -5,11 +5,18 @@ function findProductIndex(itemConfig, cartItems) {
     return cartItems.findIndex(item => item.product_id === product_id && item.color === color);
 }
 
+const cachedObj = localStorage.getItem('orders');
+const initialObj = cachedObj ? JSON.parse(cachedObj) : null;
+
+function updateLocalStorage(state) {
+    localStorage.setItem('orders', JSON.stringify(state));
+}
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        value: [],
-        count: 0
+        value: initialObj?.value || [],
+        count: initialObj?.count || 0
     },
     reducers: {
         addToCart: (state, { payload }) => {
@@ -22,12 +29,14 @@ export const cartSlice = createSlice({
             }
 
             state.count = state.value.length;
+            updateLocalStorage(state);
         },
         updateCartItem: (state, { payload }) => {
             const productIndex = findProductIndex(payload, state.value);
             if (productIndex > -1) {
                 state.value[productIndex].quantity = payload.quantity;
             }
+            updateLocalStorage(state);
         },
         removeFromCart: (state, { payload }) => {
             const productIndex = findProductIndex(payload, state.value);
@@ -35,10 +44,12 @@ export const cartSlice = createSlice({
                 state.value.splice(productIndex, 1);
             }
             state.count = state.value.length;
+            updateLocalStorage(state);
         },
         removeAllProducts: (state) => {
             state.value = [];
             state.count = 0;
+            updateLocalStorage(state);
         }
     }
 });
