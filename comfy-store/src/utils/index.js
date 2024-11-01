@@ -15,7 +15,9 @@ export const triggerFlashMessage = ({
 }) => {
   const toasterObj = {
     position,
-    theme: document.documentElement.getAttribute('data-theme') === 'winter' ? 'light' : 'dark'
+    theme: document.documentElement.getAttribute('data-theme') === 'winter' ? 'light' : 'dark',
+    pauseOnFocusLoss: false,
+    hideProgressBar: true
   };
   if(messageType === 'error') {
     toast.error(message, toasterObj);
