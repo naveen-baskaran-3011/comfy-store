@@ -1,6 +1,7 @@
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { SubmitBtn, FormInput } from "../components";
 import { login } from "../slice/userSlice";
+import { useDispatch } from "react-redux";
 
 export const action = (store) => {
     return async ({ request }) => {
@@ -23,7 +24,31 @@ export const action = (store) => {
     }
 }
 
+const loginAsGuestUser = async (dispatch, navigate) => {
+
+    try {
+        const result = await fetch('https://strapi-store-server.onrender.com/api/auth/local', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                identifier: 'test@test.com',
+                password: 'secret',
+            })
+        }).then(res => res.json()).then(loginDetails => {
+            dispatch(login(loginDetails));
+        });
+        return navigate('/');
+    } catch (e) {
+        console.error(e);
+    }
+};
+
 export default function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     return (<section className='h-screen grid place-items-center'>
         <Form
             method="post"
@@ -41,7 +66,7 @@ export default function Login() {
             <div className='mt-4'>
                 <SubmitBtn text='Login' />
             </div>
-            <button type='button' className='btn btn-secondary btn-block'>
+            <button type='button' className='btn btn-secondary btn-block' onClick={() => loginAsGuestUser(dispatch, navigate)}>
                 Guest user
             </button>
             <p className='text-center'>
