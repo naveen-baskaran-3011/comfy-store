@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import FormInput from "../components/FormInput";
 import CartTotal from "./CartTotal";
 import { Form, redirect } from "react-router-dom";
-import { formatPrice } from "../utils";
+import { formatPrice, triggerFlashMessage } from "../utils";
 import { removeAllProducts } from "../slice/cartSlice";
 
 export const action = (store, queryClient) => {
@@ -16,8 +16,7 @@ export const action = (store, queryClient) => {
         const shippingCost = 500;
         const taxAmount = 0.1 * subTotal;
         const totalAmount = subTotal + taxAmount + shippingCost;
-        const numItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-        debugger;
+        const numItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0);
         try {
             const result = await fetch('https://strapi-store-server.onrender.com/api/orders', {
                 method: 'POST',
@@ -51,15 +50,27 @@ export const action = (store, queryClient) => {
             if (result.ok) {
                 queryClient.removeQueries(['orders']);
                 store.dispatch(removeAllProducts());
+                triggerFlashMessage({
+                    message: 'Order placed successfully !',
+                    messageType: 'success'
+                });
                 return redirect('/orders');
             } else {
+                triggerFlashMessage({
+                    message: 'Error while placing an order !',
+                    messageType: 'error'
+                });
                 throw new Error('Yeah... Sorry');
             }
         } catch (e) {
+            triggerFlashMessage({
+                message: 'Error while placing an order !',
+                messageType: 'error'
+            });
             console.error(e);
         }
     }
-}
+};
 
 export default function Checkout() {
     const { value: cartItems } = useSelector(state => state.cart);

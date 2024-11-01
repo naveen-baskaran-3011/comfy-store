@@ -27,6 +27,9 @@ import { loader as ordersLoader } from './pages/Orders';
 import { action as checkoutAction } from './pages/Checkout';
 import { action as registerAction } from './pages/Register';
 
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -96,6 +99,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
+        <ToastContainer />
       </QueryClientProvider>
     </Provider>
   );

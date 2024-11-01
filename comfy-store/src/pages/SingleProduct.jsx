@@ -1,7 +1,7 @@
 import { fetchProduct } from "../api/products";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import styles from './SingleProduct.module.css';
-import { formatPrice } from "../utils";
+import { formatPrice, triggerFlashMessage } from "../utils";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../slice/cartSlice";
@@ -101,7 +101,11 @@ export default function SingleProduct() {
                             ...attributes,
                             quantity,
                             color: colorCode
-                        }))
+                        }));
+                        triggerFlashMessage({
+                            message: 'Product added successfully !',
+                            messageType: 'success'
+                        });
                     }}>
                         Add to cart
                     </button>

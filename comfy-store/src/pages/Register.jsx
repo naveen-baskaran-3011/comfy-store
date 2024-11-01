@@ -1,5 +1,6 @@
 import { Form, Link, redirect } from 'react-router-dom';
 import { FormInput, SubmitBtn } from '../components';
+import { triggerFlashMessage } from '../utils';
 
 export const action = () => {
     return async({ request }) => {
@@ -18,8 +19,16 @@ export const action = () => {
                     password: formData.password
                 })
             });
+            triggerFlashMessage({
+                message: 'Registered successfully !',
+                messageType: 'success'
+            });
             return redirect('/login');
         } catch(e) {
+            triggerFlashMessage({
+                message: 'Error while registering !',
+                messageType: 'error'
+            });
             console.error(e);
         }
     }
@@ -53,7 +62,6 @@ export default function Register() {
                         Login
                     </Link>
                 </p>
-
             </Form>
         </section>
     )

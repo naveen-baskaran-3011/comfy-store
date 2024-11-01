@@ -2,6 +2,8 @@ import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { SubmitBtn, FormInput } from "../components";
 import { login } from "../slice/userSlice";
 import { useDispatch } from "react-redux";
+import { toast } from 'react-toastify';
+import { triggerFlashMessage } from "../utils";
 
 export const action = (store) => {
     return async ({ request }) => {
@@ -16,9 +18,17 @@ export const action = (store) => {
                 body: JSON.stringify(formData)
             }).then(res => res.json()).then(loginDetails => {
                 store.dispatch(login(loginDetails));
+                triggerFlashMessage({
+                    message: 'Logged in successfully !',
+                    messageType: 'success'
+                });
             });
             return redirect('/');
         } catch (e) {
+            triggerFlashMessage({
+                message: 'Error while loggin you in',
+                messageType: 'error'
+            });
             console.error(e);
         }
     }
@@ -38,9 +48,17 @@ const loginAsGuestUser = async (dispatch, navigate) => {
             })
         }).then(res => res.json()).then(loginDetails => {
             dispatch(login(loginDetails));
+            triggerFlashMessage({
+                message: 'Logged in successfully as Guest !',
+                messageType: 'success'
+            });
         });
         return navigate('/');
     } catch (e) {
+        triggerFlashMessage({
+            message: 'Error while logging in successfully as Guest !',
+            messageType: 'error'
+        });
         console.error(e);
     }
 };

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { formatPrice } from '../utils';
+import { formatPrice, triggerFlashMessage } from '../utils';
 import { removeFromCart, updateCartItem } from '../slice/cartSlice';
 
 export default function ({ cartItems }) {
@@ -39,7 +39,12 @@ export default function ({ cartItems }) {
                                         product_id: item.product_id,
                                         color: item.color,
                                         quantity: Number(e.target.value)
-                                    }))
+                                    }));
+
+                                    triggerFlashMessage({
+                                        message: 'Product updated successfully !',
+                                        messageType: 'success'
+                                    });
                                 }}
                             >
                                 {Array.from({ length: item.quantity + 5 }, (_, index) => {
@@ -52,10 +57,16 @@ export default function ({ cartItems }) {
                                 })}
                             </select>
                             <br />
-                            <button className='link link-primary link-hover' onClick={() => dispatch(removeFromCart({
+                            <button className='link link-primary link-hover' onClick={() => {
+                                dispatch(removeFromCart({
                                 product_id: item.product_id,
-                                color: item.color
-                            }))}>remove</button>
+                                color: item.color}));
+
+                                triggerFlashMessage({
+                                    message: 'Product removed successfully !',
+                                    messageType: 'success'
+                                });
+                            }}>remove</button>
                         </td>
                         <td>{formatPrice(item.price)}</td>
                     </tr>
