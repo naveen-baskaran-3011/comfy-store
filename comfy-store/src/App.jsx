@@ -25,6 +25,7 @@ import { loader as singleProductLoader } from './pages/SingleProduct';
 import { action as loginAction } from './pages/Login';
 import { loader as ordersLoader } from './pages/Orders';
 import { action as checkoutAction } from './pages/Checkout';
+import { action as registerAction } from './pages/Register';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -83,6 +84,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/register',
+    action: registerAction(),
     element: <Register />,
     errorElement: <Error />,
   },

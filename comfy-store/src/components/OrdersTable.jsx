@@ -19,7 +19,7 @@ export default function OrdersTable() {
                 </thead>
                 <tbody>
                     {ordersData.data.map(order => (
-                        <tr>
+                        <tr key={order.id}>
                             <th>{order.id}</th>
                             <td className="capitalize">{order.attributes.name}</td>
                             <td className="capitalize">{order.attributes.address}</td>

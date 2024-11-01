@@ -1,5 +1,29 @@
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, redirect } from 'react-router-dom';
 import { FormInput, SubmitBtn } from '../components';
+
+export const action = () => {
+    return async({ request }) => {
+        const data = await request.formData();
+        const formData = Object.fromEntries(data);
+
+        try {
+            const res = await fetch('https://strapi-store-server.onrender.com/api/auth/local/register', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: formData.user_name,
+                    email: formData.email,
+                    password: formData.password
+                })
+            });
+            return redirect('/login');
+        } catch(e) {
+            console.error(e);
+        }
+    }
+}
 
 export default function Register() {
     return (
