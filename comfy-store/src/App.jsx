@@ -24,6 +24,7 @@ import { loader as listProductLoader } from './pages/Products';
 import { loader as singleProductLoader } from './pages/SingleProduct';
 import { action as loginAction } from './pages/Login';
 import { loader as ordersLoader } from './pages/Orders';
+import { action as checkoutAction } from './pages/Checkout';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'checkout',
+        action: checkoutAction(store, queryClient),
         element: <Checkout />,
       },
       {
